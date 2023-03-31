@@ -1,0 +1,102 @@
+<template>
+    <template if:true={showComponent}>
+        <template if:true={showPostGrid}>
+            <lightning-card>
+
+                <div class="slds-grid ">
+                    <div class="slds-col slds-size_4-of-12"></div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <slot name="PostGrid Setup" class="widthExpanded">
+                            <div>PostGrid Setup</div>
+                        </slot>
+                    </div>
+                </div>
+                <div>
+
+                    <div class="slds-var-p-vertical_x-large">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_4-of-12"></div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <template if:true={showData}>
+                                    <lightning-input type={type1} label="API Key" data-id="apiKey" class="input"
+                                        value={apiKey} disabled={readOnly} onchange={apiKeyMethod}></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12" style=" position:relative;">
+                                <div style="position:absolute; bottom:0;">
+                                    <lightning-button-icon icon-name={icon1} title="Api Key" onclick={togglepassword1}
+                                        class="iconsButton"></lightning-button-icon>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_4-of-12"></div>
+                        </div>
+
+
+                        <div class="slds-grid">
+
+                            <div class="slds-col slds-size_4-of-12"></div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <lightning-input type="text" label="Base URL" data-id="baseURL" class="input"
+                                    value={baseURL} disabled={readOnly} onchange={baseUrlMethod}>
+                                </lightning-input>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid ">
+                    <template if:true={editMode}>
+                        <div class="slds-col slds-size_4-of-12"></div>
+                        <div class="slds-col slds-size_3-of-12">
+                            <lightning-button label="Cancel" title="Primary action" onclick={cancelMethod}> </lightning-button>
+
+                            <template if:true={showSubmit}>
+                                <lightning-button variant="brand" label="Submit" title="Primary action" style="margin-left:0.5rem"
+                                    onclick={startMethod}></lightning-button>
+                            </template>
+                        </div>
+                    </template>
+
+
+                    <template if:false={editMode}>
+                        <div class="slds-col slds-size_4-of-12"></div>
+                        <div class="slds-col slds-size_3-of-12">
+
+                            <lightning-button variant="brand" label="Edit" title="Primary action" onclick={editMethod}>
+                            </lightning-button>
+                        </div>
+                    
+                    </template>
+                </div>
+
+                <div class="slds-grid slds-m-top_small">
+                    <div class="slds-col slds-size_4-of-12"></div>
+                        <div class="slds-col slds-size_4-of-12">
+                            If you want to create a new account, please <a  href="https://www.postgrid.com/sign-up/" target="_blank"> Sign Up Here.</a> 
+                        </div>
+                </div>
+
+
+            </lightning-card>
+
+        </template>
+
+        <template if:false={showPostGrid}>
+            <lightning-card title="Access Denied">
+
+                <h1> You are not authorized for the EraClm Setup</h1>
+                <h1> Contact System Administrator</h1>
+
+            </lightning-card>
+        </template>
+
+
+    </template>
+
+
+
+
+
+
+</template>

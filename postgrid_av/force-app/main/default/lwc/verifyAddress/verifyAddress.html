@@ -1,0 +1,47 @@
+<template>
+    <h2 class="slds-modal__title" style="text-align:center;padding-top: 15px;">
+        Address Verification</h2>
+    <div class="slds-grid slds-wrap">   
+        <div class="slds-col slds-size_8-of-12">
+            <lightning-combobox style="width:221px; margin-left: 30px;
+                    margin-top: 20px;" name="AvailableFields" label={label.comboBoxLabel}
+                placeholder="Select Field" options={lstOfAddressFields} onchange={onComboBoxChange}>
+            </lightning-combobox>
+        </div>
+    </div>
+
+    <template if:true={showSpinner}>  
+            <lightning-spinner style="width: 841px;height: 331px;margin-top: 186px;"   alternative-text="Loading" variant="brand" size="medium">
+            </lightning-spinner>
+    </template>
+
+    <div class="slds-grid slds-wrap" style="margin-left:30px; margin-top:20px;">
+        <div class="slds-col slds-size_5-of-12">
+            <lightning-input label={label.actualAddressLabel} type="text" value={actualAddress} onchange={actualAddressChange}>
+            </lightning-input>
+        </div>
+        <div class="slds-col slds-size_2-of-12">
+            <img src={doubleArrow} style="height: auto;width: 77px; position: relative;left: 17%; margin-top: 17px;">                
+        </div>
+        <div class="slds-col slds-size_5-of-12">
+            <lightning-input style="margin-right: 15px;" label={label.updatedAddressLabel} type="text" value={updatedAddress} onchange={updatedAddressChange} disabled>
+            </lightning-input>
+        </div>
+    </div>
+
+
+
+    <div style="margin-right: 20px;float: right; margin-bottom: 15px; margin-top:90px;">
+        <template if:true={showValidateButton}>  
+            <lightning-button variant="brand" label="Validate" onclick={validateClick} class="slds-m-left_x-small btnvalidate" disabled>
+            </lightning-button>
+        </template>
+        <lightning-button style="margin-left: 30px;" variant="brand" label="Cancel" onclick={cancelClick}
+            class="slds-m-left_x-small"></lightning-button>
+        <lightning-button style="margin-left: 30px;" class="slds-m-left_x-small btn"       variant="brand" label="Update validated address" onclick={updateAddress} disabled>
+        </lightning-button>
+    </div>
+
+   
+
+</template>

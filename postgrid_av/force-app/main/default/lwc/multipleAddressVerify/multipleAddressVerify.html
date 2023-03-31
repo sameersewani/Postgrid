@@ -1,0 +1,140 @@
+<template>
+    <lightning-card>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning-combobox style="width:221px; margin-left: 30px;" name="SelectObject"
+                    label={label.comboBoxLabel} options={options} onchange={onObjectComboBox}>
+                </lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-combobox style="width:221px; margin-left:-23rem;" name="AvailableFields"
+                    label={label.actualAddressLabel} value={value} placeholder="Select Field"
+                    options={lstOfAddressFields} onchange={onFieldComboBox}>
+                </lightning-combobox>
+            </div>
+        </div><br>
+
+        <template if:true={ShowDataTable}>
+            <template if:true={records}>
+                <div>
+                    <lightning-datatable data={dataTableRecord} columns={columns} key-field="id"
+                        onrowselection={getSelectedRecord} selected-rows={currentRows}>
+                    </lightning-datatable>
+                </div>
+
+                <!--PAGE NAVIGATION-->
+                <div style="display:flex;">
+                    <div class="slds-align_absolute-center" style="height:5rem">
+                        <template if:true={previousButton}>
+                            <lightning-button icon-name="utility:chevronleft" label="Previous"
+                                alternative-text="Previous" onclick={previousHandler}>
+                            </lightning-button> &nbsp; &nbsp;&nbsp;
+                        </template>
+
+                        <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages}&nbsp;&nbsp;Page(s)</span> &nbsp; &nbsp;&nbsp;
+
+                        <template if:true={nextButton}>
+                            <lightning-button icon-name="utility:chevronright" label="Next" alternative-text="Next"
+                                onclick={nextHandler} class="slds-p-horizontal_x-small" icon-position="right">
+                            </lightning-button>
+                        </template>
+                    </div>
+
+                    <div class="slds-float_right">
+                        <span style="margin-top: 30px; margin-right: 46px;" class="slds-badge"> Total Records:{totalRecords}</span>
+                    </div>
+
+                </div>
+            </template>
+        </template>
+
+        <template if:true={ShowValidateButton}>
+            <div style="display:flex;">
+                <div style="margin-left: 1rem;">
+                    <template if:true={selectAllButton}>
+                        <lightning-button variant="brand" label="Select All Records"
+                            onclick={selectAll}>
+                        </lightning-button>
+                    </template>
+                </div>
+
+                <div style="position:absolute;right: 2rem;">
+                    <lightning-button class="btn" variant="brand" label="Validate Selected Records" onclick={ValidateClick} disabled>
+                    </lightning-button>
+
+                    <template if:true={ShowCancelButton}>
+                        <lightning-button style="margin-left: 1vw;"
+                            variant="brand" label="Unselect All" onclick={CancelClick}>
+                        </lightning-button>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={showSpinner}>
+            <lightning-spinner style="width: 100%;height:100%;margin-top: 193px;" alternative-text="Loading"
+                variant="brand" size="medium">
+            </lightning-spinner>
+        </template>
+
+
+        <template if:true={isModalOpen}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header" style="width: 710px;">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                            Validation Process Status</h2>
+                    </header>
+
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content" id="modal-content-id-1" style="width: 710px; height: 158px;">
+                        <template if:true={showSpinnerTwo}>
+                            <lightning-spinner style="width: 111%;height: 14rem;
+                               margin-top: 14rem;" alternative-text="Loading" variant="brand" size="medium">
+                            </lightning-spinner>
+                        </template>
+                        <p style="margin-left: 15px;"><strong>Status:-{status}</strong></p>
+                        <p style="margin-left: 15px;"><strong>Total Record Count:-{totalSize}</strong>
+                        </p>
+                        <p style="margin-left: 15px;"><strong>Success:-{rightCount}</strong></p>
+                        <p style="margin-left: 15px;"><strong>Error:-{wrongCount}</strong></p>
+                        <p style="margin-left: 15px;"><strong>Corrected:-{CorrectCount}</strong></p>
+                        <br>
+
+                        <div>
+                            <lightning-button style="margin-left: 12px;" variant="brand" label="Home" onclick={homeCLick}>
+                            </lightning-button>
+
+                            <lightning-button class="successfulRecordsbtn" style="margin-left: 32px;" variant="brand" label="View Successful Records" disabled 
+                            onclick={successfulRecordsButton}>
+                            </lightning-button>
+
+                            <lightning-button class="errorRecordsbtn" style="margin-left: 32px;" variant="brand" label="View Errored Records" disabled
+                                onclick={errorRecordsButton}>
+                            </lightning-button>
+                            <lightning-button class="updateRecordbtn" style="margin-left: 34px;" variant="brand"
+                                label="Update Validated Records" disabled onclick={updateRecordsButton}>
+                            </lightning-button>
+                        </div>
+                    </div>
+
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer" style="width: 710px;">
+                        <button class="slds-button slds-button_neutral" onclick={closeModal}
+                            title="Cancel">Cancel</button>
+                    </footer>
+                </div>
+            </section>
+        </template>
+    </lightning-card>
+</template>

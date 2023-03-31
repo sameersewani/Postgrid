@@ -1,0 +1,17 @@
+.mainClass{
+    padding: 20px;
+   
+}
+
+.iconsButton{
+    border: none;
+}
+
+.subClass{
+    padding: 20px;
+}
+
+.widthExpanded {
+    width: 100%;
+    font-size: large;
+}

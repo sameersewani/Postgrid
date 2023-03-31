@@ -1,0 +1,18 @@
+.paginationClass{
+    font-family: monospace;
+    font-size: 15px;
+    border: 0px;
+    background-color: white;
+    border-radius: 5px;
+}
+.pagination{
+    padding: 6px;
+    display: flex;
+    text-align: center;
+}
+.innerPagination{
+    border-radius: 7px;
+    border: 1px solid #c9c5c5;
+    margin:auto;
+    
+}

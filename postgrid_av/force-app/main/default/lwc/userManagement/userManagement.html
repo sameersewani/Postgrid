@@ -1,0 +1,127 @@
+<template>
+  <!-- <div style="background-color: white;"> -->
+  <div>
+    <div style="background-color: white;" class="slds-m-around--medium">
+      <div class="slds-p-around--medium">
+        <div style="font-size: initial;">
+          <strong>User Management</strong>
+        </div>
+        <div class="slds-grid" style="border-top: 2px solid rgb(200,200,200);">
+          <div class="slds-p-right--small slds-p-top--large">
+            <lightning-button variant="success" disabled={disabledUserButtons} label="Activate" title="Successful action" onclick={activateVariable}
+              class="userButtons slds-m-left_x-small"></lightning-button>
+          </div>
+          <div class="slds-p-right--small slds-col_bump-right slds-p-top--large">
+            <lightning-button variant="destructive" disabled={disabledUserButtons} label="Deactivate" title="Destructive action"
+              onclick={deactivateVariable} class="userButtons slds-m-left_x-small"></lightning-button>
+          </div>
+          <div class="slds-p-right--small slds-p-bottom--small">
+            <lightning-combobox name="progress" label="" value={value1} options={options1}
+              onchange={handleChangeFilter}></lightning-combobox>
+          </div>
+          <div class="slds-p-right--small slds-p-bottom--small">
+            <lightning-input type="text" onchange={searchValue} label="" placeholder="Enter Search Here">
+            </lightning-input>
+          </div>
+
+        </div>
+
+        <div class="">
+          <lightning-datatable 
+                        key-field="Id" 
+                        data={data} 
+                        columns={columns} 
+                        selected-rows={selection} 
+                        onrowselection={handleonrowselection}>
+          </lightning-datatable>
+        </div>
+
+        <div class="slds-grid">
+          <div style="float: left;" class="slds-size--1-of-9">
+            <lightning-combobox placeholder={rowsinpage} options={numberOfrows} onchange={handleNumberOfRows}>
+            </lightning-combobox>
+
+          </div>
+          <div style="text-align: center;margin-right: auto;margin-left: auto;"
+            class="slds-m-around--medium slds-size--8-of-9 pagination">
+            <div if:true={pagination} class="slds-p-around--xx-small innerPagination">
+              <template if:true={sizeLessThanFive}>
+                <template if:true={LessThan}>
+                  <button class="paginationClass" onclick={buttonClick}>&lt;</button>
+                </template>
+                <template for:each={UserSize} for:item="count">
+                  <button key={count.Count} class="paginationClass" onclick={buttonClick}
+                    label={count.Count}>{count.Count}</button>
+                </template>
+                <template if:true={MoreThan}>
+                  <button class="paginationClass" onclick={buttonClick}>></button>
+                </template>
+              </template>
+
+              <template if:false={sizeLessThanFive}>
+                <template if:true={LessThan}>
+                  <button class="paginationClass" onclick={buttonClick}>&lt;</button>
+                </template>
+                <button class="paginationClass" onclick={buttonClick}>1</button>
+                <template if:true={dotdotfront}>
+                  ...
+                </template>
+                <template for:each={UserSize} for:item="count">
+                  <button key={count.Count} class="paginationClass" onclick={buttonClick}
+                    label={count.Count}>{count.Count}</button>
+                </template>
+                <template if:true={dotdotend}>
+                  ...
+                </template>
+                <button class="paginationClass" onclick={buttonClick}>{lastPage}</button>
+                <template if:true={MoreThan}>
+                  <button class="paginationClass" onclick={buttonClick}>></button>
+                </template>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <template if:true={activate}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+      class="slds-modal slds-fade-in-open slds-modal_small">
+      <div class="slds-modal__container">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+          <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+          </svg>
+          <span class="slds-assistive-text">Cancel and close</span>
+        </button>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+          <p>Are you sure, You want to Activate the user</p>
+        </div>
+        <div class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={cancel}>Cancel</button>
+          <button class="slds-button slds-button_brand" onclick={handleClickActivate}>Yes</button>
+        </div>
+      </div>
+    </section>
+  </template>
+  <template if:true={deactivate}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+      class="slds-modal slds-fade-in-open slds-modal_small">
+      <div class="slds-modal__container">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+          <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+          </svg>
+          <span class="slds-assistive-text">Cancel and close</span>
+        </button>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+          <p>Are you sure, You want to Deactivate the user</p>
+        </div>
+        <div class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={cancel}>Cancel</button>
+          <button class="slds-button slds-button_brand" onclick={handleClickDeactivate}>Yes</button>
+        </div>
+      </div>
+    </section>
+  </template>
+</template>
